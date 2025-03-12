@@ -1,6 +1,6 @@
 "use client";
 
-import { Group, Layer, Rect, Stage, Star, Text } from "react-konva";
+import { Circle, Group, Layer, Rect, Stage, Star, Text } from "react-konva";
 import React, { useEffect, useRef, useState } from "react";
 
 import gsap from "gsap";
@@ -11,8 +11,8 @@ const CONFIG = {
 	seatGap: 5,
 	zoomScale: 2,
 	colors: {
-		seatAvailable: "#a3ff0f",
-		seatObtained: "#ff462e",
+		seatAvailable: "#d2ff68",
+		seatObtained: "#949494",
 	},
 };
 
@@ -21,7 +21,14 @@ function Experience() {
 	const stageRef = useRef(null);
 	const [containerSizes, setContainerSizes] = useState({ width: 0, height: 0 });
 	const floatInfoRef = useRef(null);
+	const floatSeatInfoRef = useRef(null);
 	const [floatInfo, setFloatInfo] = useState({
+		name: "Default",
+		description: "Default",
+		textColor: "#fff",
+		bgColor: "#000",
+	});
+	const [floatSeatInfo, setFloatSeatInfo] = useState({
 		name: "Default",
 		description: "Default",
 		textColor: "#fff",
@@ -46,16 +53,12 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", isObtianed: true },
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", isObtianed: true },
 					],
 				},
 			],
@@ -75,8 +78,8 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", isObtianed: true },
+						{ name: "s2", isObtianed: true },
 					],
 				},
 				{
@@ -84,9 +87,9 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", isObtianed: true },
+						{ name: "s2", isObtianed: true },
+						{ name: "s2", isObtianed: true },
 					],
 				},
 			],
@@ -108,15 +111,11 @@ function Experience() {
 					seats: [
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", isObtianed: true },
+						{ name: "s2", isObtianed: true },
+						{ name: "s2", isObtianed: true },
 					],
 				},
 				{
@@ -126,29 +125,17 @@ function Experience() {
 					seats: [
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", isObtianed: true },
+						{ name: "s2", isObtianed: true },
+						{ name: "s2", isObtianed: true },
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
 					],
@@ -160,36 +147,20 @@ function Experience() {
 					seats: [
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", isObtianed: true },
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", isObtianed: true },
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
 						{
 							name: "s2",
-							x: 0,
-							y: 0,
-							width: 10,
-							height: 10,
 							isObtianed: false,
 						},
 					],
@@ -217,18 +188,13 @@ function Experience() {
 	return (
 		<div className="grid grid-cols-6 gap-4">
 			<div className="aspect-video col-span-5 relative" ref={containerRef}>
+				{/* stage info */}
 				<div
 					className="info absolute pointer-events-none z-10 bg-white shadow-lg rounded-2xl overflow-hidden opacity-0"
 					ref={floatInfoRef}
 				>
 					<div className="px-8 py-2 flex gap-2">
 						<div>{floatInfo.name}</div>
-						{!sceneToggle && (
-							<>
-								<div>[row]</div>
-								<div>[seat]</div>
-							</>
-						)}
 					</div>
 					<div
 						className="px-8 py-2"
@@ -240,6 +206,36 @@ function Experience() {
 						{floatInfo.description}
 					</div>
 				</div>
+				{/* seat info */}
+				<div
+					className="info absolute pointer-events-none z-10 bg-white shadow-lg rounded-2xl overflow-hidden opacity-0 -translate-x-1/2 -translate-y-full origin-center"
+					ref={floatSeatInfoRef}
+				>
+					<div className="px-8 py-2 flex gap-4">
+						<div className="flex flex-col items-center gap-2">
+							<div className="text-sm opacity-80">Stage</div>
+							<div>{selectedAreaInfo?.name ?? "N/A"}</div>
+						</div>
+						<div className="flex flex-col items-center gap-2">
+							<div className="text-sm opacity-80">Row</div>
+							<div>{floatSeatInfo?.group?.name}</div>
+						</div>
+						<div className="flex flex-col items-center gap-2">
+							<div className="text-sm opacity-80">Seat</div>
+							<div>{floatSeatInfo?.name}</div>
+						</div>
+					</div>
+					<div
+						className="px-8 py-2"
+						style={{
+							backgroundColor: selectedAreaInfo?.bgColor ?? "#000",
+							color: selectedAreaInfo?.textColor ?? "#FFF",
+						}}
+					>
+						{selectedAreaInfo?.description ?? "-"}
+					</div>
+				</div>
+
 				{containerRef.current && (
 					<Stage
 						ref={stageRef}
@@ -263,7 +259,7 @@ function Experience() {
 									}
 									onClick={(e) => {
 										setSelectedArea(area);
-										alert("change scene");
+										// alert("change scene");
 										setSceneToggle(!sceneToggle);
 									}}
 									onMouseEnter={(e) => {
@@ -316,12 +312,14 @@ function Experience() {
 
 						{/* seat config */}
 						<Layer visible={!sceneToggle}>
-							<Rect
+							<Text
+								text="Back"
 								fill={"#ff0000"}
-								width={50}
-								height={50}
+								x={20}
+								y={20}
+								fontSize={20}
 								onClick={(e) => {
-									alert("back scene");
+									// alert("back scene");
 									setSelectedArea(null);
 									setSceneToggle(!sceneToggle);
 								}}
@@ -343,6 +341,11 @@ function Experience() {
 										// x={stageRef.current.container().attrs.width / 2}
 										// y={0}
 										scale={{ x: CONFIG.zoomScale, y: CONFIG.zoomScale }}
+										onClick={(e) => {
+											if (confirm("create seat?")) {
+												alert("start");
+											}
+										}}
 									/>
 
 									{/* render seats */}
@@ -352,34 +355,81 @@ function Experience() {
 												key={i}
 												x={
 													containerSizes.width / 2 -
-													(selectedAreaInfo.width / 2) * CONFIG.zoomScale
+													(selectedAreaInfo.width / 2) * CONFIG.zoomScale +
+													CONFIG.seatSize.width
 												}
 												y={
 													containerSizes.height / 2 -
 													(selectedAreaInfo.height / 2) * CONFIG.zoomScale +
 													i * CONFIG.seatSize.height +
-													CONFIG.seatGap * i
+													CONFIG.seatGap * i +
+													CONFIG.seatSize.height
 												}
+												draggable
 											>
 												{row?.seats.map((seat, j) => (
-													<Rect
+													<Group
 														key={j}
-														fill={
-															seat.isObtianed
-																? CONFIG.colors.seatObtained
-																: CONFIG.colors.seatAvailable
-														}
-														width={CONFIG.seatSize.width}
-														height={CONFIG.seatSize.height}
-														// x={CONFIG.seatGap + j * CONFIG.seatSize.width}
-														// y={CONFIG.seatSize.height}
-
 														x={CONFIG.seatSize.width * j + CONFIG.seatGap * j}
 														y={0}
-														stroke={"#000"}
-														strokeWidth={1}
-														draggable
-													/>
+														onMouseEnter={(e) => {
+															console.log(e.evt);
+
+															const current = {
+																...seat,
+																group: {
+																	...row,
+																},
+															};
+															console.log(current);
+															setFloatSeatInfo(current);
+															stageRef.current.container().style.cursor =
+																"pointer";
+															gsap.set(floatSeatInfoRef.current, {
+																x: e.evt.clientX,
+																y: e.evt.clientY,
+															});
+															gsap.fromTo(
+																floatSeatInfoRef.current,
+																{
+																	opacity: 0,
+																	yPercent: 50,
+																},
+																{
+																	opacity: 1,
+																	yPercent: 0,
+																}
+															);
+														}}
+														onMouseLeave={(e) => {
+															stageRef.current.container().style.cursor =
+																"default";
+
+															gsap.to(floatSeatInfoRef.current, {
+																opacity: 0,
+															});
+														}}
+													>
+														<Circle
+															fill={
+																seat.isObtianed
+																	? CONFIG.colors.seatObtained
+																	: CONFIG.colors.seatAvailable
+															}
+															radius={CONFIG.seatSize.width}
+															width={CONFIG.seatSize.width}
+															height={CONFIG.seatSize.height}
+															// x={CONFIG.seatGap + j * CONFIG.seatSize.width}
+															// y={CONFIG.seatSize.height}
+
+															stroke={"#000"}
+															strokeWidth={1}
+															onClick={() => {
+																alert("selected event", seat);
+															}}
+														/>
+														<Text text={seat.name} align="center" />
+													</Group>
 												))}
 											</Group>
 										))}
@@ -390,7 +440,11 @@ function Experience() {
 					</Stage>
 				)}
 			</div>
-			<div>[ctrl]</div>
+			<div className="gap-4 grid">
+				<div>[info]</div>
+				<div>[seat labeling]</div>
+				<div>[row labeling]</div>
+			</div>
 		</div>
 	);
 }
