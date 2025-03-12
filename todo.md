@@ -1,0 +1,5 @@
+- [] scene
+- [] area
+- [] seat
+- [] informative label (hover)
+- [] clone seat

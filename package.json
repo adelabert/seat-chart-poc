@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "canvas": "^3.1.0",
     "konva": "^9.3.18",
     "next": "15.2.2",
     "react": "^19.0.0",
