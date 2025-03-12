@@ -45,7 +45,7 @@ function Experience() {
 	const stageAreas = [
 		{
 			name: "D&B",
-			description: "abc",
+			description: "xyz",
 			x: 62,
 			y: 127,
 			width: 100,
@@ -58,12 +58,12 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", isObtianed: true },
+						{ name: "f1", isObtianed: true },
 						{
-							name: "s2",
+							name: "f2",
 							isObtianed: false,
 						},
-						{ name: "s2", isObtianed: true },
+						{ name: "f3", isObtianed: true },
 					],
 				},
 			],
@@ -83,8 +83,8 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", isObtianed: true },
-						{ name: "s2", isObtianed: true },
+						{ name: "f1", isObtianed: true },
+						{ name: "f2", isObtianed: true },
 					],
 				},
 				{
@@ -92,16 +92,16 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", isObtianed: true },
-						{ name: "s2", isObtianed: true },
-						{ name: "s2", isObtianed: true },
+						{ name: "m1", isObtianed: true },
+						{ name: "m2", isObtianed: true },
+						{ name: "m3", isObtianed: true },
 					],
 				},
 			],
 		},
 		{
 			name: "Mor Lam",
-			description: "abc",
+			description: "zinggg",
 			x: 481,
 			y: 45,
 			width: 200,
@@ -115,12 +115,12 @@ function Experience() {
 					y: 10,
 					seats: [
 						{
-							name: "s2",
+							name: "f1",
 							isObtianed: false,
 						},
-						{ name: "s2", isObtianed: true },
-						{ name: "s2", isObtianed: true },
-						{ name: "s2", isObtianed: true },
+						{ name: "f2", isObtianed: true },
+						{ name: "f3", isObtianed: true },
+						{ name: "f4", isObtianed: true },
 					],
 				},
 				{
@@ -129,18 +129,18 @@ function Experience() {
 					y: 10,
 					seats: [
 						{
-							name: "s2",
+							name: "m1",
 							isObtianed: false,
 						},
-						{ name: "s2", isObtianed: true },
-						{ name: "s2", isObtianed: true },
-						{ name: "s2", isObtianed: true },
+						{ name: "m2", isObtianed: true },
+						{ name: "m3", isObtianed: true },
+						{ name: "m4", isObtianed: true },
 						{
-							name: "s2",
+							name: "m5",
 							isObtianed: false,
 						},
 						{
-							name: "s2",
+							name: "m6",
 							isObtianed: false,
 						},
 					],
@@ -151,21 +151,21 @@ function Experience() {
 					y: 10,
 					seats: [
 						{
-							name: "s2",
+							name: "b1",
 							isObtianed: false,
 						},
-						{ name: "s2", isObtianed: true },
+						{ name: "b2", isObtianed: true },
 						{
-							name: "s2",
+							name: "b3",
 							isObtianed: false,
 						},
-						{ name: "s2", isObtianed: true },
+						{ name: "b4", isObtianed: true },
 						{
-							name: "s2",
+							name: "b5",
 							isObtianed: false,
 						},
 						{
-							name: "s2",
+							name: "b6",
 							isObtianed: false,
 						},
 					],
@@ -497,7 +497,11 @@ function Experience() {
 			</div>
 
 			<div className="gap-4 grid">
-				<div>[info]</div>
+				<div>
+					<div>[Stage Info]</div>
+					<div>stage: {selectedAreaInfo?.name ?? "-"}</div>
+					{/* <div>group avaliable: {selectedAreaInfo?.rows?.length ?? "-"}</div> */}
+				</div>
 				<div>[seat labeling]</div>
 				<div>[row labeling]</div>
 			</div>
