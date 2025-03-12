@@ -7,12 +7,18 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const CONFIG = {
-	seatSize: { width: 10, height: 10 },
-	seatGap: 2,
+	seatSize: { width: 20, height: 20 },
+	seatGap: 5,
+	zoomScale: 2,
+	colors: {
+		seatAvailable: "#a3ff0f",
+		seatObtained: "#ff462e",
+	},
 };
 
 function Experience() {
 	const containerRef = useRef(null);
+	const stageRef = useRef(null);
 	const [containerSizes, setContainerSizes] = useState({ width: 0, height: 0 });
 	const floatInfoRef = useRef(null);
 	const [floatInfo, setFloatInfo] = useState({
@@ -21,6 +27,8 @@ function Experience() {
 		textColor: "#fff",
 		bgColor: "#000",
 	});
+	const [selectedAreaInfo, setSelectedArea] = useState(null);
+	const [sceneToggle, setSceneToggle] = useState(true);
 
 	const stageAreas = [
 		{
@@ -38,8 +46,16 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10 },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10 },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
 					],
 				},
 			],
@@ -59,8 +75,18 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10 },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10 },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+					],
+				},
+				{
+					name: "middle",
+					x: 0,
+					y: 10,
+					seats: [
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
 					],
 				},
 			],
@@ -80,8 +106,92 @@ function Experience() {
 					x: 0,
 					y: 10,
 					seats: [
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10 },
-						{ name: "s2", x: 0, y: 0, width: 10, height: 10 },
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+					],
+				},
+				{
+					name: "middle",
+					x: 0,
+					y: 10,
+					seats: [
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
+					],
+				},
+				{
+					name: "back",
+					x: 0,
+					y: 10,
+					seats: [
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
+						{ name: "s2", x: 0, y: 0, width: 10, height: 10, isObtianed: true },
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
+						{
+							name: "s2",
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 10,
+							isObtianed: false,
+						},
 					],
 				},
 			],
@@ -97,14 +207,29 @@ function Experience() {
 		});
 	}, [containerRef.current]);
 
+	useEffect(() => {
+		console.dir(stageRef.current);
+	}, [stageRef.current]);
+	useEffect(() => {
+		console.dir(selectedAreaInfo);
+	}, [selectedAreaInfo]);
+
 	return (
 		<div className="grid grid-cols-6 gap-4">
 			<div className="aspect-video col-span-5 relative" ref={containerRef}>
 				<div
-					className="info absolute pointer-events-none z-10"
+					className="info absolute pointer-events-none z-10 bg-white shadow-lg rounded-2xl overflow-hidden opacity-0"
 					ref={floatInfoRef}
 				>
-					<div className="px-8 py-2">{floatInfo.name}</div>
+					<div className="px-8 py-2 flex gap-2">
+						<div>{floatInfo.name}</div>
+						{!sceneToggle && (
+							<>
+								<div>[row]</div>
+								<div>[seat]</div>
+							</>
+						)}
+					</div>
 					<div
 						className="px-8 py-2"
 						style={{
@@ -117,6 +242,7 @@ function Experience() {
 				</div>
 				{containerRef.current && (
 					<Stage
+						ref={stageRef}
 						width={containerSizes.width}
 						height={containerSizes.height}
 						onMouseMove={(e) => {
@@ -127,7 +253,7 @@ function Experience() {
 							});
 						}}
 					>
-						<Layer>
+						<Layer visible={sceneToggle}>
 							{stageAreas.map((area, i) => (
 								<Group
 									key={i}
@@ -135,18 +261,35 @@ function Experience() {
 									onDragEnd={(e) =>
 										console.log(e.currentTarget.x(), e.currentTarget.y())
 									}
+									onClick={(e) => {
+										setSelectedArea(area);
+										alert("change scene");
+										setSceneToggle(!sceneToggle);
+									}}
 									onMouseEnter={(e) => {
 										// e.currentTarget.stopPropagation();
 										// e.currentTarget.scale({ x: 1.2, y: 1.2 });
 										// e.currentTarget.draw();
+										stageRef.current.container().style.cursor = "pointer";
+										setFloatInfo(area);
 
-										gsap.to(floatInfoRef.current, {
-											opacity: 1,
-										});
+										gsap.fromTo(
+											floatInfoRef.current,
+											{
+												opacity: 0,
+												yPercent: 50,
+											},
+											{
+												opacity: 1,
+												yPercent: 0,
+											}
+										);
 									}}
 									onMouseLeave={(e) => {
 										// e.currentTarget.stopPropagation();
 										// e.currentTarget.scale({ x: 1, y: 1 });
+										stageRef.current.container().style.cursor = "default";
+
 										gsap.to(floatInfoRef.current, { opacity: 0 });
 									}}
 								>
@@ -162,25 +305,88 @@ function Experience() {
 										fill={area.textColor}
 										x={area.x}
 										y={area.y}
+										width={area.width}
+										height={area.height}
 										fontSize={18}
+										align="center"
 									/>
 								</Group>
 							))}
-							{/* <Group>
-								<Text text="Try to drag a star" fill={"#000"} />
-								<Rect
-									fill="#89b717"
-									width={containerSizes.width}
-									height={containerSizes.height}
-									x={0}
-									y={0}
-
-								/>
-							</Group> */}
 						</Layer>
 
 						{/* seat config */}
-						<Layer></Layer>
+						<Layer visible={!sceneToggle}>
+							<Rect
+								fill={"#ff0000"}
+								width={50}
+								height={50}
+								onClick={(e) => {
+									alert("back scene");
+									setSelectedArea(null);
+									setSceneToggle(!sceneToggle);
+								}}
+							/>
+							{selectedAreaInfo && (
+								<Group>
+									<Rect
+										fill={selectedAreaInfo.bgColor}
+										width={selectedAreaInfo.width}
+										height={selectedAreaInfo.height}
+										x={
+											containerSizes.width / 2 -
+											(selectedAreaInfo.width / 2) * CONFIG.zoomScale
+										}
+										y={
+											containerSizes.height / 2 -
+											(selectedAreaInfo.height / 2) * CONFIG.zoomScale
+										}
+										// x={stageRef.current.container().attrs.width / 2}
+										// y={0}
+										scale={{ x: CONFIG.zoomScale, y: CONFIG.zoomScale }}
+									/>
+
+									{/* render seats */}
+									<Group>
+										{selectedAreaInfo.rows.map((row, i) => (
+											<Group
+												key={i}
+												x={
+													containerSizes.width / 2 -
+													(selectedAreaInfo.width / 2) * CONFIG.zoomScale
+												}
+												y={
+													containerSizes.height / 2 -
+													(selectedAreaInfo.height / 2) * CONFIG.zoomScale +
+													i * CONFIG.seatSize.height +
+													CONFIG.seatGap * i
+												}
+											>
+												{row?.seats.map((seat, j) => (
+													<Rect
+														key={j}
+														fill={
+															seat.isObtianed
+																? CONFIG.colors.seatObtained
+																: CONFIG.colors.seatAvailable
+														}
+														width={CONFIG.seatSize.width}
+														height={CONFIG.seatSize.height}
+														// x={CONFIG.seatGap + j * CONFIG.seatSize.width}
+														// y={CONFIG.seatSize.height}
+
+														x={CONFIG.seatSize.width * j + CONFIG.seatGap * j}
+														y={0}
+														stroke={"#000"}
+														strokeWidth={1}
+														draggable
+													/>
+												))}
+											</Group>
+										))}
+									</Group>
+								</Group>
+							)}
+						</Layer>
 					</Stage>
 				)}
 			</div>
