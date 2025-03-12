@@ -1,0 +1,5 @@
+้hover zone
+click -> show details (seats + hover)
+
+
+zone design (seats araangment) + label seat edit
