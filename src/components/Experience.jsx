@@ -335,6 +335,7 @@ function Experience() {
 									// alert("back scene");
 									setSelectedArea(null);
 									setSceneToggle(!sceneToggle);
+									setCoordDraft([0, 0, 0, 0]);
 								}}
 							/>
 							{selectedAreaInfo && (
