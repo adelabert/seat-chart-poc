@@ -1,6 +1,6 @@
 "use client";
 
-import { Circle, Group, Layer, Rect, Stage, Star, Text } from "react-konva";
+import { Circle, Group, Layer, Line, Rect, Stage, Text } from "react-konva";
 import React, { useEffect, useRef, useState } from "react";
 
 import gsap from "gsap";
@@ -13,6 +13,7 @@ const CONFIG = {
 	colors: {
 		seatAvailable: "#d2ff68",
 		seatObtained: "#949494",
+		seatHover: "#76c70d",
 	},
 };
 
@@ -36,6 +37,10 @@ function Experience() {
 	});
 	const [selectedAreaInfo, setSelectedArea] = useState(null);
 	const [sceneToggle, setSceneToggle] = useState(true);
+	const [createToggle, setCreateToggle] = useState(false);
+
+	const [coordDraft, setCoordDraft] = useState([0, 0, 0, 0]);
+	const [newSeats, setNewSeats] = useState([]);
 
 	const stageAreas = [
 		{
@@ -184,6 +189,14 @@ function Experience() {
 	useEffect(() => {
 		console.dir(selectedAreaInfo);
 	}, [selectedAreaInfo]);
+
+	useEffect(() => {
+		if (coordDraft.length < 1) {
+			return;
+		}
+
+		for (let i = 0; i < coordDraft.length; i++) {}
+	}, [coordDraft]);
 
 	return (
 		<div className="grid grid-cols-6 gap-4">
@@ -342,10 +355,44 @@ function Experience() {
 										// y={0}
 										scale={{ x: CONFIG.zoomScale, y: CONFIG.zoomScale }}
 										onClick={(e) => {
-											if (confirm("create seat?")) {
-												alert("start");
+											console.log(e.evt);
+											if (createToggle) {
+												setCoordDraft((prev) => [
+													prev[0],
+													prev[1],
+													e.evt.offsetX,
+													e.evt.offsetY,
+												]);
+												setCreateToggle(false);
+
+												// alert("end");
+											} else {
+												if (confirm("create seat?")) {
+													// alert("start");
+
+													setCoordDraft((prev) => [
+														e.evt.offsetX,
+														e.evt.offsetY,
+														e.evt.offsetX,
+														e.evt.offsetY,
+														// prev[2],
+														// prev[3],
+													]);
+
+													setCreateToggle(true);
+
+													alert("select endpoint");
+												}
 											}
 										}}
+									/>
+
+									{/* render create */}
+									<Line
+										stroke={1}
+										strokeWidth={1}
+										points={[...coordDraft]}
+										fill="#ff0000"
 									/>
 
 									{/* render seats */}
@@ -373,7 +420,7 @@ function Experience() {
 														x={CONFIG.seatSize.width * j + CONFIG.seatGap * j}
 														y={0}
 														onMouseEnter={(e) => {
-															console.log(e.evt);
+															// console.log(e.evt);
 
 															const current = {
 																...seat,
@@ -383,8 +430,11 @@ function Experience() {
 															};
 															console.log(current);
 															setFloatSeatInfo(current);
-															stageRef.current.container().style.cursor =
-																"pointer";
+
+															if (!seat.isObtianed) {
+																stageRef.current.container().style.cursor =
+																	"pointer";
+															}
 															gsap.set(floatSeatInfoRef.current, {
 																x: e.evt.clientX,
 																y: e.evt.clientY,
@@ -428,7 +478,11 @@ function Experience() {
 																alert("selected event", seat);
 															}}
 														/>
-														<Text text={seat.name} align="center" />
+														{/* <Text
+															text={seat.name}
+															align="center"
+															fontSize={10}
+														/> */}
 													</Group>
 												))}
 											</Group>
@@ -440,10 +494,15 @@ function Experience() {
 					</Stage>
 				)}
 			</div>
+
 			<div className="gap-4 grid">
 				<div>[info]</div>
 				<div>[seat labeling]</div>
 				<div>[row labeling]</div>
+			</div>
+			<div>
+				[debug]
+				{JSON.stringify(coordDraft).toString()}
 			</div>
 		</div>
 	);
